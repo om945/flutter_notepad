@@ -24,18 +24,43 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.black,
       ),
-      body: Center(
-        child: Text(
-          'currently Empty',
-          style: TextStyle(
-              color: Colors.white,
-              fontFamily: GoogleFonts.poppins().fontFamily),
-        ),
+      body: ListView.builder(
+        itemCount: notes.length,
+        itemBuilder: (context, index) {
+          return Card(
+              child: Padding(
+            padding: const EdgeInsets.all(10),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                notes[index].title,
+                style: TextStyle(
+                  fontStyle: GoogleFonts.poppins().fontStyle,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                notes[index].note,
+                style: TextStyle(
+                  fontStyle: GoogleFonts.poppins().fontStyle,
+                  fontSize: 25,
+                ),
+                maxLines: 10000,
+                overflow: TextOverflow.ellipsis,
+              )
+            ]),
+          ));
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const AddNotes()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  AddNotes(onNewNoteCreated: OnNewNoteCreated)));
         },
         child: Icon(
           Icons.add,
