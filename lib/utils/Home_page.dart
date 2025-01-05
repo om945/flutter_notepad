@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notepad/Pages/note_card.dart';
 import 'package:flutter_notepad/models.dart/note.dart';
 import 'package:flutter_notepad/utils/add_notes.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,51 +17,30 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // backgroundColor: Colors.black,
+        shape: Border(bottom: BorderSide(color: Colors.white, width: 0.1)),
         title: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Notepad',
           ),
         ),
-        backgroundColor: Colors.black,
       ),
       body: ListView.builder(
         itemCount: notes.length,
         itemBuilder: (context, index) {
-          return Card(
-              child: Padding(
-            padding: const EdgeInsets.all(10),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                notes[index].title,
-                style: TextStyle(
-                  fontStyle: GoogleFonts.poppins().fontStyle,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                notes[index].note,
-                style: TextStyle(
-                  fontStyle: GoogleFonts.poppins().fontStyle,
-                  fontSize: 25,
-                ),
-                maxLines: 10000,
-                overflow: TextOverflow.ellipsis,
-              )
-            ]),
-          ));
+          return NoteCard(
+            note: notes[index],
+            index: index,
+            onNoteDeleted: onNoteDeleted,
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>
-                  AddNotes(onNewNoteCreated: OnNewNoteCreated)));
+                  AddNotes(onNewNoteCreated: onNewNoteCreated)));
         },
         child: Icon(
           Icons.add,
@@ -69,12 +49,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void OnNewNoteCreated(Note note) {
+  void onNewNoteCreated(Note note) {
     notes.add(note);
     setState(() {});
   }
 
-  void OnNoteDeleted(int index) {
+  void onNoteDeleted(int index) {
     notes.removeAt(index);
     setState(() {});
   }

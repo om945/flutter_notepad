@@ -19,8 +19,11 @@ class _AddNotesState extends State<AddNotes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
+        // iconTheme: IconThemeData(color: Colors.white),
+        // backgroundColor: Colors.black,
+        shape: Border(
+          bottom: BorderSide(color: Colors.white, width: 0.1),
+        ),
         title: Text(
           'Add Notes',
           style: TextStyle(color: Colors.white),
@@ -31,7 +34,7 @@ class _AddNotesState extends State<AddNotes> {
         child: Column(
           children: [
             SizedBox(
-              height: 10,
+              height: 0.5,
             ),
             TextFormField(
               controller: titleController,
@@ -65,7 +68,7 @@ class _AddNotesState extends State<AddNotes> {
             return;
           }
           final note =
-              Note(title: titleController.text, note: noteController.text);
+              Note(title: titleController.text, body: noteController.text);
           widget.onNewNoteCreated(note);
           Navigator.of(context).pop();
         },
